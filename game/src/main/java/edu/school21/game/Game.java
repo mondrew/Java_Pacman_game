@@ -8,6 +8,7 @@ import edu.school21.game.map.GameMap;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static edu.school21.game.OutputData.*;
@@ -75,7 +76,20 @@ public class Game {
 		gameMap.printGameMap();
 
 
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PORTAL)));
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
 
+		gameMap.movePlayer(GameMap.UPWARD);
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+
+		gameMap.movePlayer(GameMap.DOWNWARD);
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+
+		gameMap.movePlayer(GameMap.LEFT);
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+
+		gameMap.movePlayer(GameMap.RIGHT);
+		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
 	}
 
 

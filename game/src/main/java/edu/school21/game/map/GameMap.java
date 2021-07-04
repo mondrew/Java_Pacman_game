@@ -2,6 +2,7 @@ package edu.school21.game.map;
 
 import edu.school21.game.OutputData;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,14 +14,50 @@ public class GameMap {
 	public static final int PORTAL = 3;
 	public static final int EMPTY = 4;
 
+	public static final int UPWARD = 0;
+	public static final int DOWNWARD = 1;
+	public static final int LEFT = 2;
+	public static final int RIGHT = 3;
+
 	private final GameMapData gameMapData;
-	private final int[][] gameMap;
+
+	private int[][] gameMap;
+	private int playerPos;
+	private int portalPos;
+
 
 	public GameMap(int enemiesCount, int wallsCount, int gameMapWidth) {
 		gameMapData = new GameMapData(enemiesCount, wallsCount, gameMapWidth);
 		gameMap = new int[gameMapWidth][gameMapWidth];
 		for (int[] row: gameMap)
 			Arrays.fill(row, EMPTY);
+	}
+
+	public void movePlayer(int direction) {
+		switch (direction) {
+			case UPWARD:
+				playerPos -= gameMapData.getGameMapWidth();
+				break;
+			case DOWNWARD:
+				playerPos += gameMapData.getGameMapWidth();
+				break;
+			case LEFT:
+				playerPos--;
+				break;
+			case RIGHT:
+				playerPos++;
+				break;
+		}
+	}
+
+	public int[] getUnitPos(int unitType) {
+		if (unitType == PLAYER) {
+			return convertLinedCoordsToPlaneOnes(playerPos);
+		} else if (unitType == PORTAL) {
+			return convertLinedCoordsToPlaneOnes(portalPos);
+		} else {
+			return (new int[]{-1, -1});
+		}
 	}
 
 
@@ -45,15 +82,15 @@ public class GameMap {
 		convertLinedMapToUsualMap(linedGameMap);
 	}
 
-
-
-
 	private void convertLinedMapToUsualMap(int[] linedGameMap) {
 		for (int i = 0; i < linedGameMap.length; i++) {
 			gameMap[i / gameMapData.gameMapWidth][i % gameMapData.gameMapWidth] = linedGameMap[i];
 		}
 	}
 
+	private int[] convertLinedCoordsToPlaneOnes(int currCell) {
+		return (new int[]{currCell / gameMapData.gameMapWidth, currCell % gameMapData.gameMapWidth});
+	}
 	private void putUnits(int[] linedGameMap, int unitType) {
 		int unitAmount;
 
@@ -80,15 +117,20 @@ public class GameMap {
 			} while (linedGameMap[currCell] != EMPTY);
 
 			linedGameMap[currCell] = unitType;
+
+			if (unitType == PLAYER) {
+				playerPos = currCell;
+			} else if (unitType == PORTAL) {
+				portalPos = currCell;
+			}
 		}
 
 	}
 
 	public void printGameMap() {
-		for (int x = 0; x < gameMapData.getGameMapWidth(); x++) {
-			for (int y = 0; y < gameMapData.getGameMapWidth(); y++) {
+		for (int y = 0; y < gameMapData.getGameMapWidth(); y++) {
+			for (int x = 0; x < gameMapData.getGameMapWidth(); x++) {
 				// Get and print unit char
-//				System.out.print(gameMap[y][x]);
 				System.out.print(getUnitChar(gameMap[y][x]));
 			}
 			System.out.println("");
@@ -112,12 +154,9 @@ public class GameMap {
 		}
 	}
 
-
 	public static boolean checkThatUnitAmountIsFine(int enemiesCount, int wallsCount, int gameMapWidth) {
 		return ((enemiesCount + wallsCount + 2) <= (gameMapWidth * gameMapWidth));
 	}
-
-
 
 	private static class GameMapData {
 		private final int enemiesCount;
