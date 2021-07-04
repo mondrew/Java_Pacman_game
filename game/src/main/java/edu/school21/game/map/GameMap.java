@@ -31,8 +31,8 @@ public class GameMap {
 	private int portalPos;
 
 
-	public GameMap(int enemiesCount, int wallsCount, int gameMapWidth) {
-		gameMapData = new GameMapData(enemiesCount, wallsCount, gameMapWidth);
+	public GameMap(int enemiesCount, int wallsCount, int gameMapWidth, String profileName) {
+		gameMapData = new GameMapData(enemiesCount, wallsCount, gameMapWidth, profileName);
 		gameMap = new int[gameMapWidth][gameMapWidth];
 		for (int[] row: gameMap)
 			Arrays.fill(row, EMPTY);
@@ -216,12 +216,13 @@ public class GameMap {
 		private final int enemiesCount;
 		private final int wallsCount;
 		private final int gameMapWidth;
-//		final String profileName;
+		final String profileName;
 
-		GameMapData(int enemiesCount, int wallsCount, int gameMapWidth) {
+		GameMapData(int enemiesCount, int wallsCount, int gameMapWidth, String profileName) {
 			this.enemiesCount = enemiesCount;
 			this.wallsCount = wallsCount;
 			this.gameMapWidth = gameMapWidth;
+			this.profileName = profileName;
 		}
 
 		public int getEnemiesCount() {

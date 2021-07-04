@@ -85,7 +85,7 @@ public class OutputData {
 					setProperty(propType, prop, propertiesData);
 				}
 			}
-
+			input.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -109,15 +109,15 @@ public class OutputData {
 		} else {
 			switch (property) {
 				case ENEMY_PROPERTY:
-					this.ENEMY_COLOR = validateAndReturnProperty(propData.getProperty("enemy.color"), propertyType);
+					ENEMY_COLOR = validateAndReturnProperty(propData.getProperty("enemy.color"), propertyType);
 				case PLAYER_PROPERTY:
-					this.PLAYER_COLOR = validateAndReturnProperty(propData.getProperty("player.color"), propertyType);
+					PLAYER_COLOR = validateAndReturnProperty(propData.getProperty("player.color"), propertyType);
 				case WALL_PROPERTY:
-					this.WALL_COLOR = validateAndReturnProperty(propData.getProperty("wall.color"), propertyType);
+					WALL_COLOR = validateAndReturnProperty(propData.getProperty("wall.color"), propertyType);
 				case PORTAL_PROPERTY:
-					this.PORTAL_COLOR = validateAndReturnProperty(propData.getProperty("goal.color"), propertyType);
+					PORTAL_COLOR = validateAndReturnProperty(propData.getProperty("goal.color"), propertyType);
 				case EMPTY_PROPERTY:
-					this.EMPTY_COLOR = validateAndReturnProperty(propData.getProperty("empty.color"), propertyType);
+					EMPTY_COLOR = validateAndReturnProperty(propData.getProperty("empty.color"), propertyType);
 			}
 		}
 	}

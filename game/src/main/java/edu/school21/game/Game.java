@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
+import edu.school21.game.exceptions.IllegalParametersException;
+
 import static edu.school21.game.OutputData.*;
 
 @Parameters(separators = "=")
@@ -60,7 +62,8 @@ public class Game {
 		// Unit amount validation
 		if (!GameMap.checkThatUnitAmountIsFine(game.enemiesCount, game.wallsCount, game.gameMapWidth)) {
 			System.err.println("Wrong amount of units!");
-			System.exit(-1);
+			throw new IllegalParametersException("Wrong amount of units!");
+//			System.exit(-1);
 		}
 
 
@@ -70,29 +73,51 @@ public class Game {
 
 
 		// Game map generation
-		GameMap gameMap = new GameMap(game.enemiesCount, game.wallsCount, game.gameMapWidth);
+		GameMap gameMap = new GameMap(game.enemiesCount, game.wallsCount, game.gameMapWidth, game.profileName);
 
 		gameMap.generateGameMap();
+
+
+		gameMap.printGameMap();
+		System.out.println("\033[H\033[2J");
 		gameMap.printGameMap();
 
 		// Test pos changing
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PORTAL)));
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PORTAL)));
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+//
+//		gameMap.movePlayer(GameMap.UPWARD);
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+//
+//		gameMap.movePlayer(GameMap.DOWNWARD);
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+//
+//		gameMap.movePlayer(GameMap.LEFT);
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+//
+//		gameMap.movePlayer(GameMap.RIGHT);
+//		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
 
-		gameMap.movePlayer(GameMap.UPWARD);
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
-
-		gameMap.movePlayer(GameMap.DOWNWARD);
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
-
-		gameMap.movePlayer(GameMap.LEFT);
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
-
-		gameMap.movePlayer(GameMap.RIGHT);
-		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
-
+//		clearConsole();
+//
+//		gameMap.printGameMap();
 	}
 
+	public static void clearConsole() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+		try {
+			final String os = System.getProperty("os.name");
+
+			if (os.contains("Windows")) {
+				Runtime.getRuntime().exec("cls");
+			} else {
+				Runtime.getRuntime().exec("clear");
+			}
+		} catch (final Exception e) {
+			//  Handle any exceptions.
+		}
+	}
 
 
 }
