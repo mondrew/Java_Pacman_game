@@ -1,9 +1,9 @@
 package edu.school21.game;
 
-
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import edu.school21.game.map.GameMap;
 
 @Parameters(separators = "=")
 public class Game {
@@ -23,10 +23,10 @@ public class Game {
 
 	@Parameter(
 			names = "--size",
-			description = "Game map size",
+			description = "Game map width",
 			required = true
 	)
-	int gameMapSize;
+	int gameMapWidth;
 
 	@Parameter(
 			names = "--profile",
@@ -45,7 +45,22 @@ public class Game {
 
 		System.out.println(game.enemiesCount);
 		System.out.println(game.wallsCount);
-		System.out.println(game.gameMapSize);
+		System.out.println(game.gameMapWidth);
 		System.out.println(game.profileName);
+
+		if (!GameMap.checkThatUnitAmountIsFine(game.enemiesCount, game.wallsCount, game.gameMapWidth)) {
+			System.err.println("Wrong amount of units!");
+			System.exit(-1);
+		}
+
+
+		GameMap gameMap = new GameMap(game.enemiesCount, game.wallsCount, game.gameMapWidth);
+
+		gameMap.generateGameMap();
+		gameMap.printGameMap();
+
 	}
+
+
+
 }
