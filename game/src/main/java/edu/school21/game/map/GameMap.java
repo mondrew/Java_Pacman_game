@@ -1,13 +1,17 @@
 package edu.school21.game.map;
 
+import edu.school21.game.OutputData;
+
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameMap {
-	public static final int EMPTY = 0;
+
+	public static final int ENEMY = 0;
 	public static final int PLAYER = 1;
 	public static final int WALL = 2;
-	public static final int ENEMY = 3;
-	public static final int PORTAL = 4;
+	public static final int PORTAL = 3;
+	public static final int EMPTY = 4;
 
 	private final GameMapData gameMapData;
 	private final int[][] gameMap;
@@ -15,12 +19,15 @@ public class GameMap {
 	public GameMap(int enemiesCount, int wallsCount, int gameMapWidth) {
 		gameMapData = new GameMapData(enemiesCount, wallsCount, gameMapWidth);
 		gameMap = new int[gameMapWidth][gameMapWidth];
+		for (int[] row: gameMap)
+			Arrays.fill(row, EMPTY);
 	}
 
 
 	public void generateGameMap() {
 		// get int[] of map
 		int[] linedGameMap = new int[gameMapData.gameMapWidth * gameMapData.gameMapWidth];
+		Arrays.fill(linedGameMap, EMPTY);
 
 		// randomly put walls
 		putUnits(linedGameMap, WALL);
@@ -70,7 +77,7 @@ public class GameMap {
 			int currCell;
 			do {
 				currCell = ThreadLocalRandom.current().nextInt(0, linedGameMap.length);
-			} while (linedGameMap[currCell] != 0);
+			} while (linedGameMap[currCell] != EMPTY);
 
 			linedGameMap[currCell] = unitType;
 		}
@@ -78,16 +85,33 @@ public class GameMap {
 	}
 
 	public void printGameMap() {
-
 		for (int x = 0; x < gameMapData.getGameMapWidth(); x++) {
-
 			for (int y = 0; y < gameMapData.getGameMapWidth(); y++) {
-				System.out.print(gameMap[y][x]);
+				// Get and print unit char
+//				System.out.print(gameMap[y][x]);
+				System.out.print(getUnitChar(gameMap[y][x]));
 			}
 			System.out.println("");
 		}
-
 	}
+
+	private char getUnitChar(int unit) {
+		switch (unit) {
+			case ENEMY:
+				return OutputData.getEnemyChar();
+			case PLAYER:
+				return OutputData.getPlayerChar();
+			case WALL:
+				return OutputData.getWallChar();
+			case PORTAL:
+				return OutputData.getPortalChar();
+			case EMPTY:
+				return OutputData.getEmptyChar();
+			default:
+				return ' ';
+		}
+	}
+
 
 	public static boolean checkThatUnitAmountIsFine(int enemiesCount, int wallsCount, int gameMapWidth) {
 		return ((enemiesCount + wallsCount + 2) <= (gameMapWidth * gameMapWidth));
@@ -95,10 +119,10 @@ public class GameMap {
 
 
 
-	public static class GameMapData {
-		final int enemiesCount;
-		final int wallsCount;
-		final int gameMapWidth;
+	private static class GameMapData {
+		private final int enemiesCount;
+		private final int wallsCount;
+		private final int gameMapWidth;
 //		final String profileName;
 
 		GameMapData(int enemiesCount, int wallsCount, int gameMapWidth) {
