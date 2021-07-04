@@ -23,6 +23,13 @@
             <version>1.81</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.diogonunes</groupId>
+            <artifactId>JColor</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+
 
     </dependencies>
 

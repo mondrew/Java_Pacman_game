@@ -20,12 +20,11 @@ public class OutputData {
 	private static char PORTAL_CHAR;
 	private static char EMPTY_CHAR;
 
-	private String enemyColor;
-	private String playerColor;
-	private String wallColor;
-	private String portalColor;
-	private String emptyColor;
-
+	private static String ENEMY_COLOR;
+	private static String PLAYER_COLOR;
+	private static String WALL_COLOR;
+	private static String PORTAL_COLOR;
+	private static String EMPTY_COLOR;
 
 	public static char getEnemyChar() {
 		return ENEMY_CHAR;
@@ -47,24 +46,24 @@ public class OutputData {
 		return EMPTY_CHAR;
 	}
 
-	public String getEnemyColor() {
-		return enemyColor;
+	public static String getEnemyColor() {
+		return ENEMY_COLOR;
 	}
 
-	public String getPlayerColor() {
-		return playerColor;
+	public static String getPlayerColor() {
+		return PLAYER_COLOR;
 	}
 
-	public String getWallColor() {
-		return wallColor;
+	public static String getWallColor() {
+		return WALL_COLOR;
 	}
 
-	public String getPortalColor() {
-		return portalColor;
+	public static String getPortalColor() {
+		return PORTAL_COLOR;
 	}
 
-	public String getEmptyColor() {
-		return emptyColor;
+	public static String getEmptyColor() {
+		return EMPTY_COLOR;
 	}
 
 	public OutputData() {
@@ -110,15 +109,15 @@ public class OutputData {
 		} else {
 			switch (property) {
 				case ENEMY_PROPERTY:
-					this.enemyColor = validateAndReturnProperty(propData.getProperty("enemy.color"), propertyType);
+					this.ENEMY_COLOR = validateAndReturnProperty(propData.getProperty("enemy.color"), propertyType);
 				case PLAYER_PROPERTY:
-					this.playerColor = validateAndReturnProperty(propData.getProperty("player.color"), propertyType);
+					this.PLAYER_COLOR = validateAndReturnProperty(propData.getProperty("player.color"), propertyType);
 				case WALL_PROPERTY:
-					this.wallColor = validateAndReturnProperty(propData.getProperty("wall.color"), propertyType);
+					this.WALL_COLOR = validateAndReturnProperty(propData.getProperty("wall.color"), propertyType);
 				case PORTAL_PROPERTY:
-					this.portalColor = validateAndReturnProperty(propData.getProperty("goal.color"), propertyType);
+					this.PORTAL_COLOR = validateAndReturnProperty(propData.getProperty("goal.color"), propertyType);
 				case EMPTY_PROPERTY:
-					this.emptyColor = validateAndReturnProperty(propData.getProperty("empty.color"), propertyType);
+					this.EMPTY_COLOR = validateAndReturnProperty(propData.getProperty("empty.color"), propertyType);
 			}
 		}
 	}

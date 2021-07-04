@@ -2,9 +2,11 @@ package edu.school21.game.map;
 
 import edu.school21.game.OutputData;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.diogonunes.jcolor.Ansi.*;
+import static com.diogonunes.jcolor.Attribute.*;
 
 public class GameMap {
 
@@ -130,15 +132,60 @@ public class GameMap {
 	public void printGameMap() {
 		for (int y = 0; y < gameMapData.getGameMapWidth(); y++) {
 			for (int x = 0; x < gameMapData.getGameMapWidth(); x++) {
-				// Get and print unit char
-				System.out.print(getUnitChar(gameMap[y][x]));
+				// Get and print unit char (color taken into account)
+				chooseColorAndPrintUnit(getUnitColor(gameMap[y][x]), String.valueOf(getUnitChar(gameMap[y][x])));
 			}
 			System.out.println("");
 		}
 	}
 
-	private char getUnitChar(int unit) {
-		switch (unit) {
+	private static void chooseColorAndPrintUnit(String color, String currUnitAsString) {
+		switch (color) {
+			case "RED":
+				System.out.print(colorize(currUnitAsString, NONE(), RED_BACK()));
+				break;
+			case "GREEN":
+				System.out.print(colorize(currUnitAsString, NONE(), GREEN_BACK()));
+				break;
+			case "YELLOW":
+				System.out.print(colorize(currUnitAsString, NONE(), YELLOW_BACK()));
+				break;
+			case "BLUE":
+				System.out.print(colorize(currUnitAsString, NONE(), BLUE_BACK()));
+				break;
+			case "MAGENTA":
+				System.out.print(colorize(currUnitAsString, NONE(), MAGENTA_BACK()));
+				break;
+			case "CYAN":
+				System.out.print(colorize(currUnitAsString, NONE(), CYAN_BACK()));
+				break;
+			case "WHITE":
+				System.out.print(colorize(currUnitAsString, NONE(), WHITE_BACK()));
+				break;
+			default:
+				System.out.print(colorize(currUnitAsString, NONE(), BLACK_BACK()));
+		}
+	}
+
+	private String getUnitColor(int unitType) {
+		switch (unitType) {
+			case ENEMY:
+				return OutputData.getEnemyColor();
+			case PLAYER:
+				return OutputData.getPlayerColor();
+			case WALL:
+				return OutputData.getWallColor();
+			case PORTAL:
+				return OutputData.getPortalColor();
+			case EMPTY:
+				return OutputData.getEmptyColor();
+			default:
+				return "";
+		}
+	}
+
+	private char getUnitChar(int unitType) {
+		switch (unitType) {
 			case ENEMY:
 				return OutputData.getEnemyChar();
 			case PLAYER:
