@@ -21,6 +21,9 @@ public class GameMap {
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
 
+	public static final int Y = 0;
+	public static final int X = 1;
+
 	private final GameMapData gameMapData;
 
 	private int[][] gameMap;
@@ -52,6 +55,11 @@ public class GameMap {
 		}
 	}
 
+	public void moveItem(int[] curPos, int[] newPos) {
+		gameMap[newPos[Y]][newPos[X]] = gameMap[curPos[Y]][curPos[X]];
+		gameMap[curPos[Y]][curPos[X]] = EMPTY;
+	}
+
 	public int[] getUnitPos(int unitType) {
 		if (unitType == PLAYER) {
 			return convertLinedCoordsToPlaneOnes(playerPos);
@@ -61,7 +69,6 @@ public class GameMap {
 			return (new int[]{-1, -1});
 		}
 	}
-
 
 	public void generateGameMap() {
 		// get int[] of map

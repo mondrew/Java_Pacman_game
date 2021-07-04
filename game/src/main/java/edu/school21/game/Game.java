@@ -75,7 +75,7 @@ public class Game {
 		gameMap.generateGameMap();
 		gameMap.printGameMap();
 
-
+		// Test pos changing
 		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PORTAL)));
 		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
 
@@ -90,6 +90,7 @@ public class Game {
 
 		gameMap.movePlayer(GameMap.RIGHT);
 		System.out.println(Arrays.toString(gameMap.getUnitPos(GameMap.PLAYER)));
+
 	}
 
 
